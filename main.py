@@ -104,17 +104,23 @@ def run(arg):
         p.join(timeout=13)
         p.terminate()
         end = time()
-        results[d] = {
-            'latency': latency.value,
-            'speed': 0
-        }
+        l = latency.value
         delta = end - start.value
         speed_pure = int(num.value/1024) / delta
         speed = "%.2f kB/sec" % (
             speed_pure) if speed_pure < 1024 else "%.2f MB/sec" % (speed_pure / 1024)
+        # The connection is marked as Failed after 13 seconds if there's no response
         if speed_pure == 0.0:
             speed = bcolors.FAIL + bcolors.BOLD + "Failed" + bcolors.ENDC
+            l = ""
+        else:
+            l = "{:.2f}".format(latency.value)
         print(f" -- {speed}")
+        # Initialise the dictionary
+        results[d] = {
+            'latency': l,
+            'speed': 0
+        }
         results[d]['speed'] = speed
         if arg == '-s':
             sort[d] = speed_pure
@@ -132,7 +138,7 @@ if __name__ == "__main__":
         if not arg in ["-l", "-s"]:
             raise ArgumentError("Incorrect argument passed")
     place = run(arg)
-    print(bcolors.HEADER + bcolors.BOLD + "{:<3} {:<40} {:<25} {}".format(
+    print(bcolors.HEADER + bcolors.BOLD + "{:<3} {:<40} {:<20} {}".format(
         'N', 'Mirrors', 'Avg speed', 'Latency') + bcolors.ENDC)
     try:
         if arg == "-s":
@@ -140,9 +146,11 @@ if __name__ == "__main__":
         elif arg == "-l":
             pl = place[0]
         for i, k in enumerate(pl):
-            print("{:<3} {:<40} {:<25} {:.2f} sec" .format(
+            print("{:<3} {:<40} {:<20} {}" .format(
                 i + 1, k, place[1][k]['speed'], place[1][k]['latency']))
         if os.path.exists('data.temp'):
             os.remove('data.temp')
     except TypeError:
+        if os.path.exists('data.temp'):
+            os.remove('data.temp')
         print('Exited')
