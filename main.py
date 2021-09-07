@@ -20,7 +20,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-
+# This can stay intact, this function is simply for receiving test package ie alacritty
 def get(n, start, lat, d, link):
     import requests
     file_name = "data.temp"
@@ -48,12 +48,14 @@ def get(n, start, lat, d, link):
                                  done, ' ' * (50-done), (dl/1024), (total_length/1024)))
                 sys.stdout.flush()
 
-
+# This is where you can modify to further support more package managers
 def run(arg):
+    # You can add more preset packages here
     pkgs = ['chaotic-aur/x86_64/alacritty-git-0.9.0.1850.g4a3bcdb4-1-x86_64.pkg.tar.zst',
             'community/os/x86_64/alacritty-0.9.0-1-x86_64.pkg.tar.zst']
-    dire = '/etc/pacman.d/'
+    dire = '/etc/pacman.d/' # Default mirror directory for pacman, you shouldn't change this
     quest = input("Your mirrors' directory is: " + bcolors.HEADER + dire + bcolors.ENDC + " Correct? \n(y/n): ")
+    # Selection menus
     while True:
         if quest.lower() == "y":
             break
@@ -90,7 +92,7 @@ def run(arg):
         data = file.read().replace('\n', ';').replace(";;", ";")
 
     data = data.split(";")
-    data = list(a.replace("Server = ", "").replace(" ", "")[:a.index('$repo') - 9]
+    data = list(a.replace("Server = ", "").replace(" ", "")[:a.index('$') - 9]
                 for a in list(i for i in data if i != "") if a[0] != "#")
 
     for d in data:
