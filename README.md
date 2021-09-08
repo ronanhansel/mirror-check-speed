@@ -3,8 +3,11 @@ A simple python module for linux package managers which check and report fastest
 # Usage 
 `python main.py <argument>`
 ### Available arguments
+### Mandatory arguments
 * `-s` : Sort mirrors by speed
 * `-l` : Sort mirrors by latency
+### Optional arguments
+* `a`: Advanced mode, retrieve all available mirrors from AUR (for pacman only)
 
 # Supported package managers
 * Only pacman is known to be working in perfect state at the moment (I use Arch btw), to add more, you can modify the request url in main to enable more package managers
