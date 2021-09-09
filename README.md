@@ -1,5 +1,5 @@
 # mirror-check-speed
-A simple python module for linux package managers which check and report fastest mirrors based on speed and latency
+A simple python module for linux package managers which checks and reports fastest mirrors based on speed and latency
 # Usage 
 `python main.py <argument>`
 ### Available arguments
