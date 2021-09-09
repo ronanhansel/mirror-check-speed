@@ -24,8 +24,7 @@ python main.py <arguments>
 #### Tips
 * Add "!" in front of the mirrors you don't want to check, the script will ignore those lines
 # Supported package managers
-* ~~Only pacman is known to be working in perfect state with current presets at the moment, to add more, you can contribute by modify the request url in main to enable more package managers~~ Supports all package managers, more testing needed because I'm currently using Arch
-* Almost all package managers can be supported if you enter the url for custom package path and if the mirror file splits host url with a dollar sign ("$")
+* ~~Only pacman is known to be working in perfect state with current presets at the moment, to add more, you can contribute by modify the request url in main to enable more package managers~~ Supports all package managers although more testing needed.
 
 # Well-tested mirrors
 Here are the list of mirrors I tested myself, pretty much most of pacman mirrors' are supported because of the similariy of the request url
@@ -36,7 +35,7 @@ Here are the list of mirrors I tested myself, pretty much most of pacman mirrors
 
 # Contribute
 The module is very simple and easy to use and maintain, you can add more mirrors by modifying the request urls. I'll try to elaborate as much as possible in my code with comments.
-# Some actual pictures
+# Some images
 ![2021-09-09_17-56](https://user-images.githubusercontent.com/64572619/132673995-6237ecb9-9c7e-4975-91a2-646161b6859f.png)
 ![2021-09-09_17-58](https://user-images.githubusercontent.com/64572619/132674093-8b1c9a30-d74c-406e-8ddd-56d531aa7e67.png)
 ![2021-09-09_17-59](https://user-images.githubusercontent.com/64572619/132674156-621880d8-4d23-4db9-b3b3-9e2867828f22.png)
