@@ -36,6 +36,6 @@ Here are the list of mirrors I tested myself, pretty much most of pacman mirrors
 # Contribute
 The module is very simple and easy to use and maintain, you can add more mirrors by modifying the request urls. I'll try to elaborate as much as possible in my code with comments.
 # Some images
-![2021-09-09_17-56](https://user-images.githubusercontent.com/64572619/132673995-6237ecb9-9c7e-4975-91a2-646161b6859f.png)
+![2021-09-09_18-10](https://user-images.githubusercontent.com/64572619/132675699-1f766d02-9632-457e-9589-89aae96930a4.png)
 ![2021-09-09_17-58](https://user-images.githubusercontent.com/64572619/132674093-8b1c9a30-d74c-406e-8ddd-56d531aa7e67.png)
 ![2021-09-09_17-59](https://user-images.githubusercontent.com/64572619/132674156-621880d8-4d23-4db9-b3b3-9e2867828f22.png)
