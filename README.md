@@ -8,9 +8,11 @@ A simple python module for linux package managers which check and report fastest
 * `-l` : Sort mirrors by latency
 ### Optional arguments
 * `a`: Advanced mode, retrieve all available mirrors from AUR (for pacman only)
-
+* `g`: Generate mirrorlist, sorted based on the result, highly experimental, only proceed if you know what you're doing
+### Tips
+* Add "!" in front of the mirrors you don't want to check, the script will ignore those lines
 # Supported package managers
-* Only pacman is known to be working in perfect state at the moment (I use Arch btw), to add more, you can modify the request url in main to enable more package managers
+* Only pacman is known to be working in perfect state with current presets at the moment (I use Arch btw), to add more, you can contribute by modify the request url in main to enable more package managers
 * Almost all package managers can be supported if you enter the url for custom package path and if the mirror file splits host url with a dollar sign ("$")
 
 # Well-tested mirrors
