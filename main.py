@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 
-
-import os, sys, requests
+import os
+import sys
+import requests
 from advanced import pacman_all_mirrors
 from time import time
 from multiprocessing import Process, Value
 from ctypes import ArgumentError
 from termcolours import bcolors
 
-# For better user experience when using the script, when debugging this line should be commented
-# but this must not be commented upon commit
+# For better user experience when using the script, when debugging this line can be commented
+# but this must not be commented upon commits
 sys.tracebacklimit = 0
 
 # initialise dicts
@@ -17,24 +18,24 @@ sys.tracebacklimit = 0
 results = {}
 sort = {}
 
-
-prompt = bcolors.HEADER + "⇁ " + bcolors.ENDC
+# Various abbreviations
+prompt = bcolors.OKGREEN + "⇁ " + bcolors.ENDC
+total = 0
 
 def print_list(arr: list):
     for i, k in enumerate(arr):
         print(prompt + f"{i}. {k}")
-        
+
 
 # This can stay intact, this function is simply for receiving test package ie alacritty
-def get(n, start, lat, d, link):
+def get(n, start, lat, d, link, i):
     file_name = "data.temp"
-    print("Testing " + bcolors.OKBLUE +
+    print(f"{i + 1}/{total} {prompt}" + bcolors.OKBLUE +
           bcolors.BOLD + d + bcolors.ENDC)
     lat_start = time()
     response = requests.get(link, stream=True)
     lat_end = time()
     lat.value = lat_end - lat_start
-
     total_length = response.headers.get('content-length')
     with open(file_name, "wb") as f:
         if total_length is None:  # no content length header
@@ -53,18 +54,22 @@ def get(n, start, lat, d, link):
                 sys.stdout.flush()
 
 # This is where you can modify to further support more package managers
+
+
 def run(arg):
     try:
         if not 'a' in arg:
-            dire = '/etc/pacman.d/' # Default mirror directory for pacman, you shouldn't change this
-            quest = input("Your mirrors' directory is: " + bcolors.HEADER + dire + bcolors.ENDC + " Correct? \n(y/n): ")
+            dire = '/etc/pacman.d/'  # Default mirror directory for pacman, you shouldn't change this
+            quest = input("Your mirrors' directory is: " +
+                          bcolors.HEADER + dire + bcolors.ENDC + " Correct? \n(y/n): ")
             # Selection menus
             while True:
                 if quest.lower() == "y":
                     break
                 elif quest.lower() == "n":
                     dire = input('input yours instead: ')
-                    if dire == '/etc/pacman.d/': print("That's just the same xD")
+                    if dire == '/etc/pacman.d/':
+                        print("That's just the same xD")
                     break
                 else:
                     print("Please enter a valid option")
@@ -85,31 +90,35 @@ def run(arg):
             data = list(a.replace("Server = ", "").replace(" ", "")[:a.index('$') - 9]
                         for a in list(i for i in data if i != "") if a[0] != "#")
         else:
-            print('Advanced mode enabled, testing all available mirrors in https://archlinux.org')
+            print(
+                'Advanced mode enabled, testing all available mirrors in https://archlinux.org')
             data = pacman_all_mirrors()
-            print('Do you want to continue? (any/n)')
-            ip = input()
+            print('Do you want to continue?')
+            ip = input('(any/n)')
             if ip == "n":
                 return
         # You can add more preset packages here
-        pkgs = ['chaotic-aur/x86_64/alacritty-git-0.9.0.1850.g4a3bcdb4-1-x86_64.pkg.tar.zst',
-                'community/os/x86_64/alacritty-0.9.0-1-x86_64.pkg.tar.zst']
+        pkgs = ['community/os/x86_64/alacritty-0.9.0-1-x86_64.pkg.tar.zst',
+                'chaotic-aur/x86_64/alacritty-git-0.9.0.1850.g4a3bcdb4-1-x86_64.pkg.tar.zst']
         print_list(pkgs)
         print(bcolors.WARNING + "If there's any error with your test, this might be why. Try changing package to see if it's the problem " +
-            "\nOr you can search manually and paste the url here, " + 
-            "\nplease note the valid url would look something like $repo/os/$package or $repo/$package" +
-            bcolors.BOLD + "\nDO NOT" + bcolors.ENDC + bcolors.WARNING + " include host url" + bcolors.ENDC)
+              "\nOr you can search manually and paste the url here, " +
+              "\nplease note the valid url would look something like $repo/os/$package or $repo/$package" +
+              bcolors.BOLD + "\nDO NOT" + bcolors.ENDC + bcolors.WARNING + " include host url" + bcolors.ENDC)
         try:
-            usr = input("Select test packages url(integer) or enter your own(string): ")
+            usr = input(
+                "Select test packages url(integer) or enter your own(string): ")
             target = int(usr)
             pkg = pkgs[target]
         except Exception:
             pkg = usr
-        for d in data:
+        global total
+        total = len(data)
+        for i, d in enumerate(data):
             num = Value('d', 0.0)
             start = Value('d', 0.0)
             latency = Value('d', 0.0)
-            p = Process(target=get, args=(num, start, latency, d, d + pkg))
+            p = Process(target=get, args=(num, start, latency, d, d + pkg, i))
             p.start()
             p.join(timeout=13)
             p.terminate()
@@ -136,8 +145,11 @@ def run(arg):
                 sort[d] = speed_pure
             elif 'l' in arg:
                 sort[d] = latency.value
-            
-        return dict(sorted(sort.items(), key=lambda item: item[1])), results
+        reordered = dict(sorted(sort.items(), key=lambda item: item[1]))
+        if "g" in arg:
+            from generatemirror import makemrr
+            makemrr(reversed(reordered))
+        return reordered, results
     except KeyboardInterrupt:
         print('Interrupted')
         return dict(sorted(sort.items(), key=lambda item: item[1])), results
@@ -151,7 +163,7 @@ if __name__ == "__main__":
         if not arg[1] in ["l", "s"]:
             raise ArgumentError("Incorrect argument passed")
     place = run(arg)
-    print(bcolors.HEADER + bcolors.BOLD + "{:<3} {:<40} {:<20} {}".format(
+    print(bcolors.HEADER + bcolors.BOLD + "{:<3} {:<50} {:<20} {}".format(
         'N', 'Mirrors', 'Avg speed', 'Latency') + bcolors.ENDC)
     try:
         if "s" in arg:
@@ -159,7 +171,7 @@ if __name__ == "__main__":
         elif "l" in arg:
             pl = place[0]
         for i, k in enumerate(pl):
-            print("{:<3} {:<40} {:<20} {}" .format(
+            print("{:<3} {:<50} {:<20} {}" .format(
                 i + 1, k, place[1][k]['speed'], place[1][k]['latency']))
         if os.path.exists('data.temp'):
             os.remove('data.temp')

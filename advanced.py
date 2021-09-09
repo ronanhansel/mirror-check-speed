@@ -10,7 +10,7 @@ def pacman_all_mirrors() -> list:
         try:
             os.remove('pacmanmirrorlist')
         except OSError:
-            print('No pacmanmirrorlist detected, retrieving file')
+            print('No pacmanmirrorlist in $HOME detected, retrieving file')
         print('Connecting to https://archlinux.org')
         wget.download(
             'https://archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on')
