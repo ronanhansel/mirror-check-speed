@@ -87,8 +87,10 @@ def run(arg):
                 data = file.read().replace('\n', ';').replace(";;", ";")
 
             data = data.split(";")
-            data = list(a.replace("Server = ", "").replace(" ", "")[:a.index('$') - 9]
+            or_link = list(a.replace("Server = ", "").replace(" ", "")
                         for a in list(i for i in data if i != "") if a[0] != "#")
+            data = list(a[:a.index('$')] for a in or_link)
+            origin = dict(zip(data, or_link))
         else:
             print(
                 'Advanced mode enabled, testing all available mirrors in https://archlinux.org')
@@ -101,9 +103,8 @@ def run(arg):
         pkgs = ['community/os/x86_64/alacritty-0.9.0-1-x86_64.pkg.tar.zst',
                 'chaotic-aur/x86_64/alacritty-git-0.9.0.1850.g4a3bcdb4-1-x86_64.pkg.tar.zst']
         print_list(pkgs)
-        print(bcolors.WARNING + "If there's any error with your test, this might be why. Try changing package to see if it's the problem " +
+        print(bcolors.WARNING + "Try changing package if there's problem " +
               "\nOr you can search manually and paste the url here, " +
-              "\nplease note the valid url would look something like $repo/os/$package or $repo/$package" +
               bcolors.BOLD + "\nDO NOT" + bcolors.ENDC + bcolors.WARNING + " include host url" + bcolors.ENDC)
         try:
             usr = input(
@@ -148,7 +149,7 @@ def run(arg):
         reordered = dict(sorted(sort.items(), key=lambda item: item[1]))
         if "g" in arg:
             from generatemirror import makemrr
-            makemrr(reversed(reordered))
+            makemrr(reversed(list(a for a in reordered)), origin)
         return reordered, results
     except KeyboardInterrupt:
         print('Interrupted')
