@@ -64,9 +64,9 @@ def run(arg):
                           bcolors.HEADER + dire + bcolors.ENDC + " Do you want to change?\n(y/n): ")
             # Selection menus
             while True:
-                if quest.lower() == "y":
+                if quest.lower() == "n":
                     break
-                elif quest.lower() == "n":
+                elif quest.lower() == "y":
                     dire = input('input yours instead: ')
                     if dire == '/etc/pacman.d/':
                         print("That's just the same xD")
