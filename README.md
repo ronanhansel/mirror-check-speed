@@ -1,6 +1,5 @@
 # mirror-check-speed
 A simple python module for linux package managers which checks and reports fastest mirrors based on speed and latency
-<<<<<<< HEAD
 # A brief intro
 So you find out that your internet speed is extremely fast but when updating or installing any packages via terminal, it seems to be very slow, how come? 
 Actually there's one common problem many would face is that the mirror configuration was incorrectly set up. 
@@ -11,8 +10,6 @@ The script will read the mirror file which you specify or it detects and ignore 
 
 The script can also modify mirror file (see `Usage` below) accordingly to the test result. Or just export them to your current working directory (cwd)
 
-=======
->>>>>>> 9f9a1297520310649539ca4b3d3d94f7092d8e97
 # Usage 
 ```
 python main.py <arguments>
@@ -24,11 +21,7 @@ python main.py <arguments>
 #### Optional arguments
 * `a`: Advanced mode, retrieve all available mirrors from AUR (for pacman only)
 * `g`: Generate mirrorlist, sorted based on the result, highly experimental, only proceed if you know what you're doing
-<<<<<<< HEAD
 #### Tips
-=======
-### Tips
->>>>>>> 9f9a1297520310649539ca4b3d3d94f7092d8e97
 * Add "!" in front of the mirrors you don't want to check, the script will ignore those lines
 # Supported package managers
 * Only pacman is known to be working in perfect state with current presets at the moment (I use Arch btw), to add more, you can contribute by modify the request url in main to enable more package managers
