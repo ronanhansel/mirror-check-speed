@@ -60,8 +60,8 @@ def run(arg):
     try:
         if not 'a' in arg:
             dire = '/etc/pacman.d/'  # Default mirror directory for pacman, you shouldn't change this
-            quest = input("Your mirrors' directory is: " +
-                          bcolors.HEADER + dire + bcolors.ENDC + " Correct? \n(y/n): ")
+            quest = input("Default mirror directory is: " +
+                          bcolors.HEADER + dire + bcolors.ENDC + " Do you want to change?\n(y/n): ")
             # Selection menus
             while True:
                 if quest.lower() == "y":
@@ -96,7 +96,7 @@ def run(arg):
                 'Advanced mode enabled, testing all available mirrors in https://archlinux.org')
             data = pacman_all_mirrors()
             print('Do you want to continue?')
-            ip = input('(any/n)')
+            ip = input('(any/n): ')
             if ip == "n":
                 return
         # You can add more preset packages here

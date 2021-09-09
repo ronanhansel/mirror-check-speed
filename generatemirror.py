@@ -1,4 +1,5 @@
 import os
+from termcolours import bcolors
 from subprocess import call, Popen, PIPE, STDOUT
 
 
@@ -17,20 +18,20 @@ def makemrr(*result):
         os.remove("mirrorlist")
     with open("mirrorlist", "x") as m:
         m.write(data)
-    print("Do you want the file to be saved (and override if exist) to /etc/pacman.d/mirrorlist?")
-    print("This is highly experimental for non-pacman users and if you're not using arch mirrors, only proceed if you know what you're doing")
-    print("If you select no (n) the file will be stored inside of your cwd")
+    print(bcolors.WARNING + "Do you want the file to be saved (and override if exist) to /etc/pacman.d/mirrorlist?"
+    + "\nThis is highly experimental for non-pacman users and if you're not using arch mirrors, only proceed if you know what you're doing"
+    + "\nIf you select no (n) the file will be stored inside of your cwd" + bcolors.ENDC)
     while True:
-        ans = input('(y/n) ')
+        ans = input('(y/n): ')
         if ans == "y":
-            event = Popen(f"sudo mv {os.getcwd()}/mirrorlist /etc/pacman.d/mirrorlist", shell=True, stdin=PIPE, stdout=PIPE,
-                stderr=STDOUT)
+            event = Popen(f"sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; sudo mv {os.getcwd()}/mirrorlist /etc/pacman.d/mirrorlist", shell=True, stdin=PIPE, stdout=PIPE,
+                  stderr=STDOUT)
             print(event.communicate()[0].decode("utf-8"))
             print('Successfully saved file')
+            print('Backup file is located in /etc/pacman.d/mirrorlist.bak')
             break
         elif ans == "n":
             print('Saved mirrorlist in ' + os.getcwd())
             return
         else:
             print('Please enter a valid option')
-    

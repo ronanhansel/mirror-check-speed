@@ -5,7 +5,7 @@ def pacman_all_mirrors() -> list:
     u = 'y'
     if os.path.exists('pacmanmirrorlist'):
         print('pacmanmirrorlist exists, do you want to redownload?')
-        u = input('(y/n) ')
+        u = input('(y/n): ')
     if u.lower() == "y":
         try:
             os.remove('pacmanmirrorlist')
