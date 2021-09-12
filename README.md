@@ -22,7 +22,7 @@ python main.py <arguments>
 * `a`: Advanced mode, retrieve all available mirrors from AUR (for pacman only)
 * `g`: Generate mirrorlist, sorted based on the result and save in cwd or replace `/etc/pacman.d/mirrorlist` (highly experimental, only proceed if you know what you're doing)
 #### Tips
-* Add "!" in front of the mirrors you don't want to check, the script will ignore those lines
+* Add "!" or "#" in front of the mirrors you don't want to check, the script will ignore those lines
 # Supported package managers
 * ~~Only pacman is known to be working in perfect state with current presets at the moment, to add more, you can contribute by modify the request url in main to enable more package managers~~ Supports all package managers although more testing needed.
 
@@ -34,8 +34,9 @@ Here are the list of mirrors I tested myself, pretty much most of pacman mirrors
 * Almost mirrors from any package managers (Again more testing needed)
 
 # Contribute
-The module is very simple and easy to use and maintain, you can add more mirrors by modifying the request urls. I'll try to elaborate as much as possible in my code with comments.
+The module is very simple and easy to use and maintain, feel free to make a pull request. I'll try to elaborate as much as possible in my code with comments.
 # Some images
-![2021-09-09_18-10](https://user-images.githubusercontent.com/64572619/132675699-1f766d02-9632-457e-9589-89aae96930a4.png)
-![2021-09-09_17-58](https://user-images.githubusercontent.com/64572619/132674093-8b1c9a30-d74c-406e-8ddd-56d531aa7e67.png)
-![2021-09-09_17-59](https://user-images.githubusercontent.com/64572619/132674156-621880d8-4d23-4db9-b3b3-9e2867828f22.png)
+![Screenshot_20210912_153930](https://user-images.githubusercontent.com/64572619/132980151-2bf71ceb-33c5-430c-9675-4da00496d208.png)
+![Screenshot_20210912_153946](https://user-images.githubusercontent.com/64572619/132980156-4a2ba130-c3ce-4614-8eb8-51b1cb1bc6ca.png)
+![Screenshot_20210912_154012](https://user-images.githubusercontent.com/64572619/132980158-a19ae465-eea1-411c-8abf-5ec6bc433ff9.png)
+
