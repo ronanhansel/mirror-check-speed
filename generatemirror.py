@@ -1,6 +1,6 @@
 import os
 from termcolours import bcolors
-from subprocess import call, Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE, STDOUT
 
 
 def makemrr(*result):
@@ -19,7 +19,6 @@ def makemrr(*result):
     with open("mirrorlist", "x") as m:
         m.write(data)
     print(bcolors.WARNING + "Do you want the file to be saved (and override if exist) to /etc/pacman.d/mirrorlist?"
-    + "\nThis is highly experimental for non-pacman users and if you're not using arch mirrors, only proceed if you know what you're doing"
     + "\nIf you select no (n) the file will be stored inside of your cwd" + bcolors.ENDC)
     while True:
         ans = input('(y/n): ')
