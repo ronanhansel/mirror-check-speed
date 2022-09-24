@@ -161,7 +161,7 @@ if __name__ == "__main__":
         raise ArgumentError('Missing argument')
     else:
         arg = sys.argv[1]
-        if not arg[1] in ["l", "s"]:
+        if arg[1] not in ["l", "s"]:
             raise ArgumentError("Incorrect argument passed")
     place = run(arg)
     print(bcolors.HEADER + bcolors.BOLD + "{:<3} {:<50} {:<20} {}".format(
